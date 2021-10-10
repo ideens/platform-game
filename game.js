@@ -74,11 +74,20 @@ function gameLoop() {
     
     if(keys["ArrowRight"]) {
         console.log("Right Key Pressed")
-        player.x++
+        
+        if(player.velX < player.speed){ //speed of player right
+            player.velX++
+        }
     }
 
     if(keys["ArrowLeft"]) {
         console.log("Left Key Pressed")
-        player.x--
+        
+        if(player.velX > -player.speed){ //speed of player left
+            player.velX--
+        }
     }
+
+    player.x += player.velX
+
 }
