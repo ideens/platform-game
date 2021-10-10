@@ -3,6 +3,7 @@ const context =canvas.getContext('2d')
 
 let gameStarted = false
 const keys = []
+const friction = 0.8
 
 const player = {
     x: 5,
@@ -89,5 +90,6 @@ function gameLoop() {
     }
 
     player.x += player.velX
+    player.velX *= friction //friction for player to stop on keyup
 
 }
