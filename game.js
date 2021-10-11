@@ -16,6 +16,7 @@ const player = {
     velY: 0,
     jumpStrength: 7,
     jumping: false,
+    grounded: false,
     color: "#ff99a9",
     draw: function() {
         context.fillStyle = this.color
@@ -43,7 +44,36 @@ platforms.push({
     width: 120,
     height: 10,
 })
-
+platforms.push({
+    x: 520,
+    y: 180,
+    width: 120,
+    height: 10,
+})
+platforms.push({ //floor
+    x: 0,
+    y: canvas.height-5,
+    width: canvas.width,
+    height: 10,
+})
+platforms.push({ //wall left
+    x: 0 -10,
+    y: 0,
+    width: 10,
+    height: canvas.height,
+})
+platforms.push({ //wall right
+    x: canvas.width,
+    y: 0,
+    width: 10,
+    height: canvas.height,
+})
+platforms.push({ //ceiling
+    x: 0,
+    y: -10,
+    width: canvas.width,
+    height: 10,
+})
 
 // KEYS
 document.addEventListener ("keydown", function(e){
@@ -78,12 +108,12 @@ function startGame(){
     gameStarted = true
     clearCanvas()
     console.log("Game Started")
+    requestAnimationFrame(gameLoop)
 
-    setInterval(function(){
-        clearCanvas()
-        gameLoop()
-    }, 1000/30)
-
+    // setInterval(function(){
+    //     clearCanvas()
+    //     gameLoop()
+    // }, 1000/30)
 
 }
 
@@ -102,9 +132,9 @@ function drawPlatforms() {
 }
 
 
-
 // Main game loop
 function gameLoop() {
+    clearCanvas()
     console.log("Game Running")
     player.draw()
     drawPlatforms()
@@ -137,10 +167,78 @@ function gameLoop() {
     player.y += player.velY
     player.velY += gravity //increase gravity when jumped
 
-    if(player.y >= canvas.height - player.height) {
-        player.y = canvas.height - player.height
-        player.jumping = false
+    player.grounded = false
+
+    // Looping through platforms to check for collisions
+    for(let i = 0; i < platforms.length; i++){
+        let direction = collisionDetection(player, platforms[i])
+        console.log(direction)
+        
+        if(direction === "left" || direction === "right"){
+            player.velX = 0
+        } else if (direction === "bottom") {
+            player.jumping = false
+            player.grounded = true
+        } else if (direction === "top") {
+            player.velY *= -1
+        }
+
+    }
+    if (player.grounded) {
+        player.velY = 0
     }
 
+    // if(player.y >= canvas.height - player.height) {
+    //     player.y = canvas.height - player.height
+    //     player.jumping = false
+    // }
+    
+    requestAnimationFrame(gameLoop)
 
 }
+
+    function collisionDetection(player, platform) {
+        // x axis
+        // distance between objects colliding
+        // get sum of half of the widths of the objects
+        // same for y axis
+        // collision on right side is -ive (player.x - platform.x)
+
+        const checkX = (player.x + (player.width/2)) - (platform.x + (platform.width/2))
+        const checkY = (player.y + (player.height/2)) - (platform.y + (platform.height/2))
+    
+        const checkWidth = (player.width/2) + (platform.width/2)
+        const checkHeight = (player.height/2) + (platform.height/2)
+        
+        // Direction player is colliding with platform
+        let collisionDirection = null
+
+        if(Math.abs(checkX) < checkWidth && Math.abs(checkY) < checkHeight) {
+            console.log("Collision Detected")
+            
+            // Checking where the collision is
+            const offsetX = checkWidth - Math.abs(checkX)
+            const offsetY = checkHeight - Math.abs(checkY)
+            if (offsetX < offsetY) {
+                if(checkX > 0) {
+                    console.log("Collision on the sides")
+                    collisionDirection = "left"
+                    player.x += offsetX //makes sure it doesnt overlap with object
+                } else {
+                    collisionDirection = "right"
+                    player.x -= offsetX 
+                }
+            } else {
+                if(checkY > 0) {
+                    console.log("Collision on the top/bottom")
+                    collisionDirection = "top"
+                    player.y += offsetY //makes sure it doesnt overlap with object
+                } else {
+                    collisionDirection = "bottom"
+                    player.y -= offsetY 
+                }
+            }
+        }
+
+        return collisionDirection
+    }
