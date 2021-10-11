@@ -5,6 +5,7 @@ let gameStarted = false
 const keys = []
 const friction = 0.8
 const gravity = 0.98
+let levelCompleted = false
 
 const player = {
     x: 5,
@@ -18,6 +19,18 @@ const player = {
     jumping: false,
     grounded: false,
     color: "#ff99a9",
+    draw: function() {
+        context.fillStyle = this.color
+        context.fillRect(this.x,this.y,this.width, this.height)
+    }
+}
+
+const door = {
+    x: canvas.width - 30,
+    y: 145,
+    width: 25,
+    height: 35,
+    color: "#e6c653",
     draw: function() {
         context.fillStyle = this.color
         context.fillRect(this.x,this.y,this.width, this.height)
@@ -107,7 +120,7 @@ context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 50)
 function startGame(){
     gameStarted = true
     clearCanvas()
-    console.log("Game Started")
+    //console.log("Game Started")
     requestAnimationFrame(gameLoop)
 
     // setInterval(function(){
@@ -116,6 +129,14 @@ function startGame(){
     // }, 1000/30)
 
 }
+
+function nextLevel() {
+    clearCanvas()
+    levelCompleted = true
+
+
+}
+
 
 // Function to clear the canvas
 function clearCanvas() {
@@ -131,12 +152,12 @@ function drawPlatforms() {
 
 }
 
-
 // Main game loop
 function gameLoop() {
     clearCanvas()
-    console.log("Game Running")
+    //console.log("Game Running")
     player.draw()
+    door.draw()
     drawPlatforms()
     if(keys["ArrowUp"] || keys[" "]) {
         console.log("Up Key or Space Pressed")
@@ -172,7 +193,7 @@ function gameLoop() {
     // Looping through platforms to check for collisions
     for(let i = 0; i < platforms.length; i++){
         let direction = collisionDetection(player, platforms[i])
-        console.log(direction)
+        //console.log(direction)
         
         if(direction === "left" || direction === "right"){
             player.velX = 0
@@ -188,12 +209,19 @@ function gameLoop() {
         player.velY = 0
     }
 
+    if (collisionDetection(player, door)) {
+        nextLevel()
+    }
+
     // if(player.y >= canvas.height - player.height) {
     //     player.y = canvas.height - player.height
     //     player.jumping = false
     // }
     
-    requestAnimationFrame(gameLoop)
+    // Keep looping game until level completed
+    if (!levelCompleted) {
+        requestAnimationFrame(gameLoop)
+    }
 
 }
 
@@ -214,14 +242,13 @@ function gameLoop() {
         let collisionDirection = null
 
         if(Math.abs(checkX) < checkWidth && Math.abs(checkY) < checkHeight) {
-            console.log("Collision Detected")
+            //console.log("Collision Detected")
             
             // Checking where the collision is
             const offsetX = checkWidth - Math.abs(checkX)
             const offsetY = checkHeight - Math.abs(checkY)
             if (offsetX < offsetY) {
                 if(checkX > 0) {
-                    console.log("Collision on the sides")
                     collisionDirection = "left"
                     player.x += offsetX //makes sure it doesnt overlap with object
                 } else {
@@ -230,7 +257,6 @@ function gameLoop() {
                 }
             } else {
                 if(checkY > 0) {
-                    console.log("Collision on the top/bottom")
                     collisionDirection = "top"
                     player.y += offsetY //makes sure it doesnt overlap with object
                 } else {
