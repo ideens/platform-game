@@ -42,8 +42,8 @@ const player = {
     }
     
     const doorLevelTwo = {
-        x: canvas.width - 100,
-        y: 145,
+        x: 320,
+        y: 165,
         width: 25,
         height: 35,
         color: "#1fab99",
@@ -131,6 +131,12 @@ platformsLevelTwo.push({
 platformsLevelTwo.push({
     x: 500,
     y: 180,
+    width: 120,
+    height: 10,
+})
+platformsLevelTwo.push({
+    x: 320,
+    y: 190,
     width: 120,
     height: 10,
 })
