@@ -15,10 +15,13 @@ body {
 
 #game {
   background-color: white;
-  background-image: url("bgtest.png");
   position: absolute;
   top: 50%;
   left: 50%;
   margin-left: -320px;
   margin-top: -180px;
+}
+
+.levelOne {
+  background-image: url("bgtest.png");
 }
