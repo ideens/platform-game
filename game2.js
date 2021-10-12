@@ -29,7 +29,10 @@ const player = {
     }
 }
 
-    const doorLevelOne = {
+
+
+const levelOne = {
+    door: {
         x: canvas.width - 30,
         y: 145,
         width: 25,
@@ -38,10 +41,62 @@ const player = {
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
-        }
-    }
+     } },
+
+    platformArray: [
+        {
+            x: 100,
+            y: 300,
+            width: 120,
+            height: 10,
+        },
+        {
+            x: 240,
+            y: 260,
+            width: 120,
+            height: 10,
+        },
+        {
+            x: 380,
+            y: 220,
+            width: 120,
+            height: 10,
+        },
+        {
+            x: 520,
+            y: 180,
+            width: 120,
+            height: 10,
+        },
+        { //floor
+            x: 0,
+            y: canvas.height-5,
+            width: canvas.width,
+            height: 10,
+        },
+        { //wall left
+            x: 0 -10,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //wall right
+            x: canvas.width,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //ceiling
+            x: 0,
+            y: -10,
+            width: canvas.width,
+            height: 10,
+        },
+    ] 
+}
     
-    const doorLevelTwo = {
+const levelTwo = {    
+    door: {
         x: 320,
         y: 165,
         width: 25,
@@ -50,10 +105,51 @@ const player = {
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
-        }
+        }},
+    
+    platformArray: [
+        { //floor
+            x: 0,
+            y: canvas.height-5,
+            width: canvas.width,
+            height: 10,
+        },
+        { //wall left
+            x: 0 -10,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //wall right
+            x: canvas.width,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //ceiling
+            x: 0,
+            y: -10,
+            width: canvas.width,
+            height: 10,
+        },
+        {
+            x: 500,
+            y: 180,
+            width: 120,
+            height: 10,
+        },
+        {
+            x: 320,
+            y: 190,
+            width: 120,
+            height: 10,
+        },
+    ] 
     }
 
-    const doorLevelThree = {
+
+const levelThree = {
+    door: {
         x: 90,
         y: 325,
         width: 25,
@@ -62,158 +158,54 @@ const player = {
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
-        }
-    }
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// PLATFORMS 
-const platformsLevelOne = []
-const platformsLevelTwo = []
-const platformsLevelThree =[]
-
-platformsLevelOne.push({
-    x: 100,
-    y: 300,
-    width: 120,
-    height: 10,
-})
-platformsLevelOne.push({
-    x: 240,
-    y: 260,
-    width: 120,
-    height: 10,
-})
-platformsLevelOne.push({
-    x: 380,
-    y: 220,
-    width: 120,
-    height: 10,
-})
-platformsLevelOne.push({
-    x: 520,
-    y: 180,
-    width: 120,
-    height: 10,
-})
-platformsLevelOne.push({ //floor
-    x: 0,
-    y: canvas.height-5,
-    width: canvas.width,
-    height: 10,
-})
-platformsLevelOne.push({ //wall left
-    x: 0 -10,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelOne.push({ //wall right
-    x: canvas.width,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelOne.push({ //ceiling
-    x: 0,
-    y: -10,
-    width: canvas.width,
-    height: 10,
-})
-
-//-----------------------------------Level Two
-
-
-platformsLevelTwo.push({
-    x: 500,
-    y: 180,
-    width: 120,
-    height: 10,
-})
-platformsLevelTwo.push({
-    x: 320,
-    y: 190,
-    width: 120,
-    height: 10,
-})
-
-platformsLevelTwo.push({ //floor
-    x: 0,
-    y: canvas.height-5,
-    width: canvas.width,
-    height: 10,
-})
-platformsLevelTwo.push({ //wall left
-    x: 0 -10,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelTwo.push({ //wall right
-    x: canvas.width,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelTwo.push({ //ceiling
-    x: 0,
-    y: -10,
-    width: canvas.width,
-    height: 10,
-})
-
-//-----------------------------------Level Three
-
-platformsLevelThree.push({ //floor
-    x: 0,
-    y: canvas.height-5,
-    width: canvas.width,
-    height: 10,
-})
-platformsLevelThree.push({ //wall left
-    x: 0 -10,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelThree.push({ //wall right
-    x: canvas.width,
-    y: 0,
-    width: 10,
-    height: canvas.height,
-})
-platformsLevelThree.push({ //ceiling
-    x: 0,
-    y: -10,
-    width: canvas.width,
-    height: 10,
-})
-
-platformsLevelThree.push({
-    x: 20,
-    y: 300,
-    width: 120,
-    height: 10,
-})
-platformsLevelThree.push({
-    x:90,
-    y: 360,
-    width: 120,
-    height: 10,
-})
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        }},
     
+    platformArray: [
+        { //floor
+            x: 0,
+            y: canvas.height-5,
+            width: canvas.width,
+            height: 10,
+        },
+        { //wall left
+            x: 0 -10,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //wall right
+            x: canvas.width,
+            y: 0,
+            width: 10,
+            height: canvas.height,
+        },
+        { //ceiling
+            x: 0,
+            y: -10,
+            width: canvas.width,
+            height: 10,
+        },
+        {
+            x: 20,
+            y: 300,
+            width: 120,
+            height: 10,
+        },
+        {
+            x:90,
+            y: 360,
+            width: 120,
+            height: 10,
+        },
+    ] 
 
-// START KEYS
-document.addEventListener ("keydown", function(e){
-    if (e.key == "Enter" && !gameStarted){
-        startGame()
-    }
-    keys[e.key] = true
-})
-document.addEventListener ("keyup", function(e){
-    keys[e.key] = false
-})
+}   
 
+
+// PLATFORMS 
+// const platformsLevelOne = []
+// const platformsLevelTwo = []
+// const platformsLevelThree =[]
 
 
 // Start page title
@@ -246,18 +238,52 @@ function startGame(){
     // }, 1000/30)
 }
 
+let level = levelOne
 
 // Function to draw platforms
 function drawPlatforms() {
     context.fillStyle = "#3f754e"
-    for (let i = 0; i < platforms.length; i++) {
-        context.fillRect(platforms[i].x , platforms[i].y , platforms[i].width , platforms[i].height)
+    for (let i = 0; i < level.platformArray.length; i++) {
+        context.fillRect(level.platformArray[i].x , level.platformArray[i].y , level.platformArray[i].width , level.platformArray[i].height)
     }
 }
 
 
-let platforms = platformsLevelOne
-let door = doorLevelOne
+// Main game loop
+function gameLoop() {
+    clearCanvas()
+    player.draw()
+    door.draw()
+    drawPlatforms()
+    playerMovement()
+    requestAnimationFrame(gameLoop)
+
+
+}
+
+function levelTwo() {
+    clearCanvas()
+    levelOneCompleted = true
+    level = levelThree
+
+}
+
+function levelThree() {
+    clearCanvas()
+    levelTwoCompleted = true
+    platforms = platformsLevelThree
+    door = doorLevelThree
+}
+
+function endGame(){
+    clearCanvas()
+    context.font = "20px Arial"
+    context.fillStyle = "#00b9CC"
+    context.textAlign = "center"
+    context.fillText("Game completed", canvas.width/2, canvas.height/2)
+}
+
+
 
 // Function for key consequences and player movement + door collision
 function playerMovement(){
@@ -305,12 +331,10 @@ function playerMovement(){
         player.velY = 0
     }
 
-    if (collisionDetection(player, door) ){
-        startNextLevel()
-        console.log("level two now")
+    if (collisionDetection(player, door)) {
+        levelTwo()
+        console.log("Start Level Two")
     } 
-
-    
 
     // if(player.y >= canvas.height - player.height) {
     //     player.y = canvas.height - player.height
@@ -318,42 +342,7 @@ function playerMovement(){
     // }
 }
 
-let startNextLevel = levelTwo
 
-// Main game loop
-function gameLoop() {
-    clearCanvas()
-    player.draw()
-    door.draw()
-    drawPlatforms()
-    playerMovement()
-    requestAnimationFrame(gameLoop)
-}
-
-function levelTwo() {
-    clearCanvas()
-    levelOneCompleted = true
-    platforms = platformsLevelTwo
-    door = doorLevelTwo
-    startNextLevel = levelThree
-    
-}
-
-function levelThree() {
-    clearCanvas()
-    levelTwoCompleted = true
-    platforms = platformsLevelThree
-    door = doorLevelThree
-    startNextLevel = endGame
-}
-
-function endGame(){
-    clearCanvas()
-    context.font = "20px Arial"
-    context.fillStyle = "#00b9CC"
-    context.textAlign = "center"
-    context.fillText("Game completed", canvas.width/2, canvas.height/2)
-}
 
     function collisionDetection(player, platform) {
         // x axis
