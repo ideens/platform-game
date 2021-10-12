@@ -9,13 +9,14 @@ let levelOneCompleted = false
 let levelTwoCompleted = false
 let levelThreeCompleted = false
 
-
+let playerImage = new Image()
+playerImage.src = "batmans.png"
 
 const player = {
     x: 5,
-    y: canvas.height - 20,
-    width: 20,
-    height: 20,
+    y: canvas.height - 40,
+    width: 35,
+    height: 40,
     speed: 5,
     velX: 0,
     velY: 0,
@@ -23,9 +24,17 @@ const player = {
     jumping: false,
     grounded: false,
     color: "#ff99a9",
+    position: "idle",
     draw: function() {
-        context.fillStyle = this.color
-        context.fillRect(this.x,this.y,this.width, this.height)
+        startX = 87
+        // context.fillStyle = this.color
+        // context.fillRect(this.x,this.y,this.width, this.height)
+        if(this.position === "left") {
+            startX = 0
+        } else if(this.position ==="right") {
+            startX = 174
+        }
+        context.drawImage(playerImage, startX, 0, 85, 135, this.x, this.y, 35, 45)
     }
 }
 
@@ -270,12 +279,14 @@ function playerMovement(){
     }
     if(keys["ArrowRight"]) {
         console.log("Right Key Pressed")
+        player.position = "right"
         if(player.velX < player.speed){ //speed of player right
             player.velX++
         }
     }
     if(keys["ArrowLeft"]) {
         console.log("Left Key Pressed")
+        player.position = "left"
         if(player.velX > -player.speed){ //speed of player left
             player.velX--
         }
@@ -310,12 +321,7 @@ function playerMovement(){
         console.log("level two now")
     } 
 
-    
 
-    // if(player.y >= canvas.height - player.height) {
-    //     player.y = canvas.height - player.height
-    //     player.jumping = false
-    // }
 }
 
 let startNextLevel = levelTwo
