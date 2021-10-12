@@ -3,20 +3,22 @@ const context =canvas.getContext('2d')
 
 let gameStarted = false
 const keys = []
-const friction = 0.8
+const friction = 0.7
 const gravity = 0.98
 let levelOneCompleted = false
 let levelTwoCompleted = false
 let levelThreeCompleted = false
 
 let playerImage = new Image()
-playerImage.src = "batmans.png"
+playerImage.src = "main-sprites.png"
+
+moveFrameLoop = [129, 257, 385, 513, 614, 769, 897, 1025, 1153, 1281, 1409, 1537, 1665]
 
 const player = {
-    x: 5,
-    y: canvas.height - 40,
+    x: canvas.width - 50,
+    y: canvas.height - 130,
     width: 35,
-    height: 40,
+    height: 45,
     speed: 5,
     velX: 0,
     velY: 0,
@@ -26,21 +28,25 @@ const player = {
     color: "#ff99a9",
     position: "idle",
     draw: function() {
-        startX = 87
+        startX = 1
+        startY = 1
         // context.fillStyle = this.color
         // context.fillRect(this.x,this.y,this.width, this.height)
         if(this.position === "left") {
-            startX = 0
+            startX = 129
+            startY = 134
         } else if(this.position ==="right") {
-            startX = 174
+            startX = 129
         }
-        context.drawImage(playerImage, startX, 0, 85, 135, this.x, this.y, 35, 45)
+        context.drawImage(playerImage, startX, startY, 128, 134, this.x, this.y, 42, 45)
     }
 }
 
+
+
     const doorLevelOne = {
         x: canvas.width - 30,
-        y: 145,
+        y: 75,
         width: 25,
         height: 35,
         color: "#e6c653",
@@ -80,30 +86,80 @@ const platformsLevelOne = []
 const platformsLevelTwo = []
 const platformsLevelThree =[]
 
-platformsLevelOne.push({
-    x: 100,
+platformsLevelOne.push({ //1
+    x: 520,
     y: 300,
     width: 120,
     height: 10,
 })
-platformsLevelOne.push({
-    x: 240,
-    y: 260,
-    width: 120,
+platformsLevelOne.push({ //2
+    x: 460,
+    y: 240,
+    width: 30,
     height: 10,
 })
-platformsLevelOne.push({
-    x: 380,
-    y: 220,
-    width: 120,
-    height: 10,
-})
-platformsLevelOne.push({
-    x: 520,
+platformsLevelOne.push({ //3
+    x: 400,
     y: 180,
-    width: 120,
+    width: 30,
     height: 10,
 })
+platformsLevelOne.push({ //4
+    x: 530,
+    y: 110,
+    width: 110,
+    height: 10,
+})
+platformsLevelOne.push({ //5
+    x: 300,
+    y: 220,
+    width: 60,
+    height: 10,
+})
+platformsLevelOne.push({ //6
+    x: 160,
+    y: 300,
+    width: 60,
+    height: 10,
+})
+platformsLevelOne.push({ //7
+    x: 90,
+    y: 260,
+    width: 40,
+    height: 10,
+})
+platformsLevelOne.push({ //8
+    x: 160,
+    y: 200,
+    width: 40,
+    height: 10,
+})
+platformsLevelOne.push({ //9
+    x: 240,
+    y: 90,
+    width: 240,
+    height: 10,
+})
+platformsLevelOne.push({ //10
+    x: 40,
+    y: 200,
+    width: 30,
+    height: 10,
+})
+platformsLevelOne.push({ //11
+    x: 90,
+    y: 140,
+    width: 40,
+    height: 10,
+})
+platformsLevelOne.push({ //12
+    x: 165,
+    y: 120,
+    width: 40,
+    height: 10,
+})
+
+
 platformsLevelOne.push({ //floor
     x: 0,
     y: canvas.height-5,
@@ -228,12 +284,12 @@ document.addEventListener ("keyup", function(e){
 // Start page title
 function introScreen(){
     context.font = "50px Arial"
-    context.fillStyle = "#00b9CC"
+    context.fillStyle = "#303030"
     context.textAlign = "center"
     context.fillText("Platform Game", canvas.width/2, canvas.height/2)
 
     context.font = "20px Arial"
-    context.fillStyle = "#00b9CC"
+    context.fillStyle = "#303030"
     context.textAlign = "center"
     context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 50)
 }
@@ -258,11 +314,12 @@ function startGame(){
 
 // Function to draw platforms
 function drawPlatforms() {
-    context.fillStyle = "#3f754e"
+    context.fillStyle = "#303030"
     for (let i = 0; i < platforms.length; i++) {
         context.fillRect(platforms[i].x , platforms[i].y , platforms[i].width , platforms[i].height)
     }
 }
+
 
 
 let platforms = platformsLevelOne
@@ -283,6 +340,7 @@ function playerMovement(){
         if(player.velX < player.speed){ //speed of player right
             player.velX++
         }
+        
     }
     if(keys["ArrowLeft"]) {
         console.log("Left Key Pressed")
@@ -332,7 +390,9 @@ function gameLoop() {
     player.draw()
     door.draw()
     drawPlatforms()
+    player.position = "idle"
     playerMovement()
+    
     requestAnimationFrame(gameLoop)
 }
 
@@ -342,6 +402,8 @@ function levelTwo() {
     platforms = platformsLevelTwo
     door = doorLevelTwo
     startNextLevel = levelThree
+    player.x = 50
+    
     
 }
 
@@ -356,9 +418,10 @@ function levelThree() {
 function endGame(){
     clearCanvas()
     context.font = "20px Arial"
-    context.fillStyle = "#00b9CC"
+    context.fillStyle = "#000000"
     context.textAlign = "center"
     context.fillText("Game completed", canvas.width/2, canvas.height/2)
+    
 }
 
     function collisionDetection(player, platform) {
