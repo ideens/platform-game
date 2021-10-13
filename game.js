@@ -10,7 +10,13 @@ let died = false
 let playerImage = new Image()
 playerImage.src = "batman-main.png"
 
+let rockImage = new Image()
+rockImage.src = "rocks-long.png"
 
+function drawRocks() {
+    context.drawImage(rockImage, 0, 0, 2667, 834, 0, canvas.height-140, canvas.width, 150)
+
+}
 
 const moveArrayRight = [137,273,409,545,681,817,963,1089,1225,1361,1497,1633,1769]
 const moveArrayLeft = [122,258,394,530,666,802,948,107,1210,1346,1482,1618,1754]
@@ -46,10 +52,10 @@ const player = {
 
 
     const doorLevelOne = {
-        x: canvas.width - 30,
-        y: 75,
-        width: 25,
-        height: 35,
+        x: canvas.width - 40,
+        y: 60,
+        width: 35,
+        height: 50,
         color: "#e6c653",
         draw: function() {
             context.fillStyle = this.color
@@ -62,7 +68,7 @@ const player = {
         y: 130,
         width: 35,
         height: 50,
-        color: "#aa99ff",
+        color: "#e6c653",
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
@@ -72,9 +78,9 @@ const player = {
     const doorLevelThree = {
         x: 90,
         y: 250,
-        width: 25,
-        height: 35,
-        color: "#99abdd",
+        width: 35,
+        height: 50,
+        color: "#e6c653",
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
@@ -279,14 +285,12 @@ const groundDeath = {
     y: canvas.height-20,
     width: canvas.width,
     height: 70,
-    color: "#e6c653",
+    color: "#303030",
     draw: function() {
         context.fillStyle = this.color
         context.fillRect(this.x,this.y,this.width, this.height)
     }
 }
-
-
 
 
 // START KEYS
@@ -297,6 +301,10 @@ document.addEventListener ("keydown", function(e){
     if (e.key == "Enter" && died){
         gameReset()
     }
+    if (e.key == "Enter" && completed){ ////// DOESN'T WORK
+        gameReset()
+    }
+
     keys[e.key] = true
 })
 document.addEventListener ("keyup", function(e){
@@ -358,15 +366,8 @@ function drawScore() {
     context.fillText(`SCORE: ${score}`, canvas.width/2, 25)
 }
 
-// let absorbedCoins = []
 
 function detectCoins(){
-    // for (let i = 0; i < coins.length; i++) {
-    //     if (player.x === coins){
-    //         console.log('coiny coin')
-    // }
-    // }   
-
     coins.forEach((coin, index) => {
         if (coin.isAbsorbed){
             return
@@ -464,7 +465,7 @@ function gameReset(){
     player.velY = 0
     died = false
     score = 0
-    startNextLevel = levelTwo
+    startNextLevel = levelOne
     startNextLevel()
     coins.forEach((coin) => {
         coin.isAbsorbed = false
@@ -489,7 +490,6 @@ function drawPlatforms() {
 
 let platforms 
 let door 
-let obstacle = groundDeath
 let coins 
 
 // Function for key consequences and player movement + door collision
@@ -565,14 +565,13 @@ function gameLoop(timeStamp) {
     const frame = Math.floor(timeStamp/100) % 13
     canvas.classList.add('levelOne')
     drawCoins()
-    //animatePlayer()
     player.draw(frame)
     door.draw()
     drawPlatforms()
     detectCoins()
     drawScore()
-    //absorbCoins()
     groundDeath.draw()
+    drawRocks()
     player.position = "idle"
     playerMovement()
 
@@ -614,10 +613,14 @@ function levelThree() {
 
 function endGame(){
     clearCanvas()
-    context.font = "20px Arial"
+    context.font = "60px VT323"
     context.fillStyle = "#000000"
     context.textAlign = "center"
-    context.fillText("Game completed", canvas.width/2, canvas.height/2)
+    context.fillText("YOU WON!", canvas.width/2, 190)
+    context.font = "20px VT323"
+    context.fillStyle = "#000000"
+    context.textAlign = "center"
+    context.fillText("Press Enter to play again", canvas.width/2, 250)
     completed= true
     
     
