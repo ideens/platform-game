@@ -191,7 +191,7 @@ platformsLevelTwo.push({
     x: 120,
     y: 220,
     width: 400,
-    height: 10,
+    height: 15,
 })
 platformsLevelTwo.push({
     x: canvas.width-80,
@@ -306,14 +306,14 @@ document.addEventListener ("keyup", function(e){
 
 // Start page title
 function introScreen(){
-    context.font = "50px Arial"
+    context.font = "100px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Platform Game", canvas.width/2, canvas.height/2)
-    context.font = "20px Arial"
+    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2)
+    context.font = "25px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 50)
+    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 80)
 }
 
 // Function to clear the canvas
@@ -352,10 +352,10 @@ function drawCoins() {
 let score = 0
 
 function drawScore() {
-    context.font = "20px Arial"
+    context.font = "20px VT323"
     context.fillStyle = "#000000"
     context.textAlign = "center"
-    context.fillText(`Score: ${score}`, canvas.width/2, 25)
+    context.fillText(`SCORE: ${score}`, canvas.width/2, 25)
 }
 
 // let absorbedCoins = []
@@ -438,15 +438,20 @@ function playerDied() {
     context.fillStyle = "#FFFFFF"
     context.fillRect(canvas.width/2 -200, canvas.height/2 -100, 400, 200)
 
-    context.font = "50px Arial"
+    context.font = "60px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("You died", canvas.width/2, canvas.height/2)
+    context.fillText("YOU DIED", canvas.width/2, 150)
 
-    context.font = "20px Arial"
+    context.font = "30px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter to try again", canvas.width/2, canvas.height/2 + 50)
+    context.fillText(`YOUR SCORE WAS: ${score}`, canvas.width/2, 200)
+
+    context.font = "20px VT323"
+    context.fillStyle = "#303030"
+    context.textAlign = "center"
+    context.fillText("Press Enter to try again", canvas.width/2, 250)
     
 }
 
