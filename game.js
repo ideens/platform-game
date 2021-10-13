@@ -9,13 +9,13 @@ let died = false
 
 let playerImage = new Image()
 playerImage.src = "main-sprites.png"
+let frameX = 0
+let frameY = 0
 
-//fade animation
-let opacity = 1
-let factor = 1
-let increment = 0.01
 
-moveFrameLoop = [129, 257, 385, 513, 614, 769, 897, 1025, 1153, 1281, 1409, 1537, 1665]
+
+const moveRight = [129, 257, 385, 513, 614, 769, 897, 1025, 1153, 1281, 1409, 1537, 1665]
+const moveLeft = moveRight.reverse()
 
 const player = {
     x: canvas.width - 50,
@@ -30,16 +30,18 @@ const player = {
     grounded: false,
     color: "#ff99a9",
     position: "idle",
-    draw: function(startX, startY) {
+    draw: 
+    
+    function(frame) {
         startX = 1
         startY = 1
         if(this.position === "left") {
-            startX = 129
+            startX = moveRight[frame]
             startY = 134
         } else if(this.position ==="right") {
-            startX = 129
+            startX = moveRight[frame]
         }
-        context.drawImage(playerImage, startX, startY, 128, 134, this.x, this.y, 42, 45)
+        context.drawImage(playerImage, startX, startY, 120, 134, this.x, this.y, 42, 45)
     }
 }
 
@@ -61,7 +63,7 @@ const player = {
         y: 165,
         width: 25,
         height: 35,
-        color: "#1fab99",
+        color: "#aa99ff",
         draw: function() {
             context.fillStyle = this.color
             context.fillRect(this.x,this.y,this.width, this.height)
@@ -70,7 +72,7 @@ const player = {
 
     const doorLevelThree = {
         x: 90,
-        y: 325,
+        y: 250,
         width: 25,
         height: 35,
         color: "#99abdd",
@@ -98,7 +100,7 @@ platformsLevelOne.push({ //2
     width: 30,
     height: 10,
 })
-platformsLevelOne.push({ //3
+platformsLevelOne.push({ //3 
     x: 400,
     y: 180,
     width: 30,
@@ -110,17 +112,17 @@ platformsLevelOne.push({ //4
     width: 110,
     height: 10,
 })
-platformsLevelOne.push({ //5
+platformsLevelOne.push({ //5 
     x: 300,
     y: 220,
     width: 60,
-    height: 10,
+    height: 12,
 })
 platformsLevelOne.push({ //6
     x: 160,
     y: 300,
     width: 60,
-    height: 10,
+    height: 12,
 })
 platformsLevelOne.push({ //7
     x: 90,
@@ -159,13 +161,6 @@ platformsLevelOne.push({ //12
     height: 10,
 })
 
-
-platformsLevelOne.push({ //4
-    x: 530,
-    y: 110,
-    width: 110,
-    height: 10,
-})
 platformsLevelOne.push({ //wall left
     x: 0 -10,
     y: 0,
@@ -190,7 +185,7 @@ platformsLevelOne.push({ //ceiling
 platformsLevelTwo.push({ //1
     x: 0,
     y: 110,
-    width: 120,
+    width: 250,
     height: 10,
 })
 platformsLevelTwo.push({
@@ -270,6 +265,12 @@ platformsLevelThree.push({
     width: 120,
     height: 10,
 })
+platformsLevelThree.push({
+    x: 150,
+    y: 300,
+    width: 300,
+    height: 10,
+})
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 
@@ -284,20 +285,9 @@ const groundDeath = {
         context.fillRect(this.x,this.y,this.width, this.height)
     }
 }
-// let deathObjects = []
-// deathObjects.push({ //floor
-//     x: 0,
-//     y: canvas.height-20,
-//     width: canvas.width,
-//     height: 70,
-// })
 
-// function drawDeathObjects() {
-//     context.fillStyle = "#ab3449"
-//     for (let i = 0; i < deathObjects.length; i++) {
-//         context.fillRect(deathObjects[i].x , deathObjects[i].y , deathObjects[i].width , deathObjects[i].height)
-//     }
-// }
+
+
 
 // START KEYS
 document.addEventListener ("keydown", function(e){
@@ -314,14 +304,12 @@ document.addEventListener ("keyup", function(e){
 })
 
 
-
 // Start page title
 function introScreen(){
     context.font = "50px Arial"
     context.fillStyle = "#303030"
     context.textAlign = "center"
     context.fillText("Platform Game", canvas.width/2, canvas.height/2)
-
     context.font = "20px Arial"
     context.fillStyle = "#303030"
     context.textAlign = "center"
@@ -337,6 +325,7 @@ function clearCanvas() {
 function startGame(){
     gameStarted = true
     clearCanvas()
+    startNextLevel()
     requestAnimationFrame(gameLoop)
 
     // const interval = setInterval(function(){
@@ -345,13 +334,102 @@ function startGame(){
     // }, 1000/60)
 }
 
+let coinsLevelOne = []
+let coinsLevelTwo = []
+let coinsLevelThree = []
+
+function drawCoins() {
+    context.fillStyle = "#FFF333"
+    for (let i = 0; i < coins.length; i++) {
+        if(!coins[i].isAbsorbed){
+        context.beginPath()
+        context.arc(coins[i].x , coins[i].y , 5, 0, 2*Math.PI, true)
+        context.fill()
+        context.closePath()
+    }}
+}
+
 let score = 0
 
 function drawScore() {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Score: "+score, 8, 20);
+    context.font = "20px Arial"
+    context.fillStyle = "#000000"
+    context.textAlign = "center"
+    context.fillText(`Score: ${score}`, canvas.width/2, 25)
 }
+
+// let absorbedCoins = []
+
+function detectCoins(){
+    // for (let i = 0; i < coins.length; i++) {
+    //     if (player.x === coins){
+    //         console.log('coiny coin')
+    // }
+    // }   
+
+    coins.forEach((coin, index) => {
+        if (coin.isAbsorbed){
+            return
+        }
+        const dist = Math.hypot(coin.x - player.x-player.width/2, coin.y - player.y-player.height/2)
+        //console.log(dist)
+        if (dist < 26){
+            console.log('REMOVE FROM SCREEN')
+            score += 10
+            coin.isAbsorbed = true
+            
+        }
+    })
+
+}
+
+
+// COINS IN LEVEL ONE
+coinsLevelOne.push({
+    x: 415,
+    y: 155,
+    isAbsorbed: false
+})
+coinsLevelOne.push({
+    x:315,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelOne.push({
+    x:345,
+    y:195,
+})
+coinsLevelOne.push({
+    x:180,
+    y:175,
+})
+coinsLevelOne.push({
+    x:55,
+    y:175,
+})
+coinsLevelOne.push({
+    x:300,
+    y:65,
+})
+coinsLevelOne.push({
+    x:330,
+    y:65,
+})
+coinsLevelOne.push({
+    x:360,
+    y:65,
+})
+coinsLevelOne.push({
+    x:390,
+    y:65,
+})
+coinsLevelOne.push({
+    x:420,
+    y:65,
+})
+
+//COINS IN LEVEL TWO
+
 
 function playerDied() {
     //clearCanvas()
@@ -359,7 +437,6 @@ function playerDied() {
     
     context.fillStyle = "#FFFFFF"
     context.fillRect(canvas.width/2 -200, canvas.height/2 -100, 400, 200)
-
 
     context.font = "50px Arial"
     context.fillStyle = "#303030"
@@ -381,6 +458,12 @@ function gameReset(){
     player.velX = 0
     player.velY = 0
     died = false
+    score = 0
+    startNextLevel = levelOne
+    startNextLevel()
+    coins.forEach((coin) => {
+        coin.isAbsorbed = false
+    })
     clearCanvas()
     gameLoop()
 
@@ -399,9 +482,10 @@ function drawPlatforms() {
 
 
 
-let platforms = platformsLevelOne
-let door = doorLevelOne
+let platforms 
+let door 
 let obstacle = groundDeath
+let coins 
 
 // Function for key consequences and player movement + door collision
 function playerMovement(){
@@ -451,44 +535,38 @@ function playerMovement(){
     if (player.grounded) {
         player.velY = 0
     }
-
-
+    //COLLIDING WITH THE DOOR
     if (collisionDetection(player, door) ){
         startNextLevel()
-        console.log("level two now")
     } 
-
+    //COLLIDING WITH THE GROUND
     if (collisionDetection(player, groundDeath)){
         playerDied()
         console.log("DEAD")
     }
     
-    if(!died){
+    if(!died && !completed){
     requestAnimationFrame(gameLoop)
     }
 }
 
 
-// if(count % 10 === 0) {
-//     context.clearRect(player.x, player.y, player.width, player.height)
-// } else if (count === 0){
-//     window.alert('WASTED');
-// } return
-
-
-
-
-
-
-let startNextLevel = levelTwo
+let completed = false
+let startNextLevel = levelOne
 
 // Main game loop
-function gameLoop() {
+function gameLoop(timeStamp) {
     clearCanvas()
+    const frame = Math.floor(timeStamp/50) %13
     canvas.classList.add('levelOne')
-    player.draw()
+    drawCoins()
+    //animatePlayer()
+    player.draw(frame)
     door.draw()
     drawPlatforms()
+    detectCoins()
+    drawScore()
+    //absorbCoins()
     groundDeath.draw()
     player.position = "idle"
     playerMovement()
@@ -496,23 +574,37 @@ function gameLoop() {
     
 }
 
+function levelOne(){
+    clearCanvas()
+    platforms = platformsLevelOne
+    door = doorLevelOne
+    startNextLevel = levelTwo
+    coins = coinsLevelOne
+    player.x = canvas.width - 50
+    player.y = canvas.height - 129
+
+}
+
 function levelTwo() {
     clearCanvas()
     platforms = platformsLevelTwo
     door = doorLevelTwo
     startNextLevel = levelThree
+    coins = coinsLevelTwo
     player.x = 40
     player.y = 80
-    //obstacle = NEXT OBSTACLE
+    
 
 }
 
 function levelThree() {
     clearCanvas()
-    canvas.classList.remove('levelOne')
     platforms = platformsLevelThree
     door = doorLevelThree
     startNextLevel = endGame
+    coins = coinsLevelThree
+    player.x = 300
+    player.y = 200
 }
 
 function endGame(){
@@ -521,6 +613,8 @@ function endGame(){
     context.fillStyle = "#000000"
     context.textAlign = "center"
     context.fillText("Game completed", canvas.width/2, canvas.height/2)
+    completed= true
+    
     
 }
 
