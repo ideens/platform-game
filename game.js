@@ -40,7 +40,7 @@ const player = {
             startX = moveArrayRight[frame]
             startY = 126
         }
-        context.drawImage(playerImage, startX, startY, 136, 126, this.x, this.y, 45, 42)
+        context.drawImage(playerImage, startX, startY, 134, 126, this.x, this.y, 45, 42)
     }
 }
 
@@ -58,10 +58,10 @@ const player = {
     }
     
     const doorLevelTwo = {
-        x: 320,
-        y: 165,
-        width: 25,
-        height: 35,
+        x: canvas.width - 40,
+        y: 130,
+        width: 35,
+        height: 50,
         color: "#aa99ff",
         draw: function() {
             context.fillStyle = this.color
@@ -184,21 +184,22 @@ platformsLevelOne.push({ //ceiling
 platformsLevelTwo.push({ //1
     x: 0,
     y: 110,
-    width: 250,
+    width: 80,
     height: 10,
 })
 platformsLevelTwo.push({
-    x: 460,
+    x: 120,
+    y: 220,
+    width: 400,
+    height: 10,
+})
+platformsLevelTwo.push({
+    x: canvas.width-80,
     y: 180,
-    width: 120,
+    width: 80,
     height: 10,
 })
-platformsLevelTwo.push({
-    x: 320,
-    y: 190,
-    width: 120,
-    height: 10,
-})
+
 
 platformsLevelTwo.push({ //floor
     x: 0,
@@ -458,7 +459,7 @@ function gameReset(){
     player.velY = 0
     died = false
     score = 0
-    startNextLevel = levelOne
+    startNextLevel = levelTwo
     startNextLevel()
     coins.forEach((coin) => {
         coin.isAbsorbed = false
@@ -590,7 +591,7 @@ function levelTwo() {
     door = doorLevelTwo
     startNextLevel = levelThree
     coins = coinsLevelTwo
-    player.x = 40
+    player.x = 10
     player.y = 80
     
 
