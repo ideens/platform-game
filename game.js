@@ -8,14 +8,13 @@ const gravity = 0.98
 let died = false
 
 let playerImage = new Image()
-playerImage.src = "main-sprites.png"
-let frameX = 0
-let frameY = 0
+playerImage.src = "batman-main.png"
 
 
 
-const moveRight = [129, 257, 385, 513, 614, 769, 897, 1025, 1153, 1281, 1409, 1537, 1665]
-const moveLeft = moveRight.reverse()
+const moveArrayRight = [137,273,409,545,681,817,963,1089,1225,1361,1497,1633,1769]
+const moveArrayLeft = [122,258,394,530,666,802,948,107,1210,1346,1482,1618,1754]
+
 
 const player = {
     x: canvas.width - 50,
@@ -36,12 +35,12 @@ const player = {
         startX = 1
         startY = 1
         if(this.position === "left") {
-            startX = moveRight[frame]
-            startY = 134
+            startX = moveArrayLeft[frame]
         } else if(this.position ==="right") {
-            startX = moveRight[frame]
+            startX = moveArrayRight[frame]
+            startY = 126
         }
-        context.drawImage(playerImage, startX, startY, 120, 134, this.x, this.y, 42, 45)
+        context.drawImage(playerImage, startX, startY, 136, 126, this.x, this.y, 45, 42)
     }
 }
 
@@ -557,7 +556,7 @@ let startNextLevel = levelOne
 // Main game loop
 function gameLoop(timeStamp) {
     clearCanvas()
-    const frame = Math.floor(timeStamp/50) %13
+    const frame = Math.floor(timeStamp/100) % 13
     canvas.classList.add('levelOne')
     drawCoins()
     //animatePlayer()
