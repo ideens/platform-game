@@ -3,6 +3,7 @@ const collectAudio = document.getElementById('collect')
 const levelTransitionAudio = document.getElementById('level')
 const deathAudio = document.getElementById('death')
 const swooshAudio = document.getElementById('swoosh')
+const laserAudio = document.getElementById('laser')
 
 const canvas = document.getElementById('game')
 const context =canvas.getContext('2d')
@@ -54,6 +55,12 @@ function swooshSound() {
     swooshAudio.volume = 0.5
     swooshAudio.play()
 }
+
+
+    laserAudio.src = "laser.mp3"
+    laserAudio.volume = 0.2
+    
+
 
 const moveArrayRight = [137,273,409,545,681,817,963,1089,1225,1361,1497,1633,1769]
 const moveArrayLeft = [122,258,394,530,666,802,948,107,1210,1346,1482,1618,1754]
@@ -295,7 +302,12 @@ platformsLevelThree.push({ //ceiling
     width: canvas.width,
     height: 10,
 })
-
+platformsLevelThree.push({
+    x: canvas.width-80,
+    y: 180,
+    width: 80,
+    height: 10,
+})
 platformsLevelThree.push({
     x: 20,
     y: 300,
@@ -424,7 +436,6 @@ function detectCoins(){
         const dist = Math.hypot(coin.x - player.x-player.width/2, coin.y - player.y-player.height/2)
         //console.log(dist)
         if (dist < 26){
-            console.log('REMOVE FROM SCREEN')
             score += 10
             coin.isAbsorbed = true
             collectSound()
@@ -432,6 +443,7 @@ function detectCoins(){
     })
 
 }
+
 
 
 // COINS IN LEVEL ONE
@@ -448,37 +460,170 @@ coinsLevelOne.push({
 coinsLevelOne.push({
     x:345,
     y:195,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:180,
     y:175,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:55,
     y:175,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:300,
     y:65,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:330,
     y:65,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:360,
     y:65,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:390,
     y:65,
+    isAbsorbed: false
 })
 coinsLevelOne.push({
     x:420,
     y:65,
+    isAbsorbed: false
 })
 
+// COINS IN LEVEL TWO
 
+coinsLevelTwo.push({
+    x:140,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:180,
+    y:170,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:220,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:260,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:300,
+    y:170,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:340,
+    y:170,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:380,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:420,
+    y:195,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:460,
+    y:170,
+    isAbsorbed: false
+})
+coinsLevelTwo.push({
+    x:500,
+    y:195,
+    isAbsorbed: false
+})
+
+// LEVEL TWO OBSTACLES
+let obstaclesArray =[]
+
+class Obstacle {
+    constructor(x,y,width,height,speed) {
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.speed = speed
+        
+    }
+    draw() {
+        context.fillStyle = "#ff6229"
+        context.fillRect(this.x, this.y, this.width, this.height)
+    }
+    update() {
+        this.y +=this.speed
+        if(this.y > canvas.height+this.height){
+            this.y = - 300
+        }
+    }
+}
+
+function levelTwoObstacles1(){
+    for(let i=0; i < 100; i++){
+        let spaceY = i*50
+        obstaclesArray.push(new Obstacle(100, spaceY, 2, 10, 3))
+    }
+}
+function levelTwoObstacles2(){
+    for(let i=0; i < 50; i++){
+        let spaceY = i*40
+        obstaclesArray.push(new Obstacle(200, spaceY, 2, 8, 5))
+    }
+}
+function levelTwoObstacles3(){
+    for(let i=0; i < 80; i++){
+        let spaceY = i*60
+        obstaclesArray.push(new Obstacle(300, spaceY, 2, 10, 8))
+    }
+}
+function levelTwoObstacles4(){
+    for(let i=0; i < 10; i++){
+        let spaceY = i*20
+        obstaclesArray.push(new Obstacle(400, spaceY, 2, 5, 6))
+    }
+}
+function levelTwoObstacles5(){
+    for(let i=0; i < 80; i++){
+        let spaceY = i*30
+        obstaclesArray.push(new Obstacle(500, spaceY, 2, 10, 5))
+    }
+}
+
+
+function handleObstacles(){
+    for(let i=0; i < obstaclesArray.length; i++){
+        obstaclesArray[i].update()
+        obstaclesArray[i].draw()
+    }
+}
+
+function detectLaser(){
+    obstaclesArray.forEach((laser)=> {
+       const distance = Math.hypot(laser.x - player.x-player.width/2, laser.y - player.y-player.height/2)
+       if (distance < 24){
+           console.log("LASER HIT")
+           deathSound()
+           playerDied()
+       }
+    })
+}
 
 function playerDied() {
     //clearCanvas()
@@ -625,6 +770,8 @@ function gameLoop(timeStamp) {
     detectCoins()
     drawScore()
     drawLevel()
+    detectLaser()
+    handleObstacles()
     groundDeath.draw()
     drawRocks()
     player.position = "idle"
@@ -642,6 +789,7 @@ function levelOne(){
     levelDisplay = "Level 1"
     player.x = canvas.width - 50
     player.y = canvas.height - 129
+    obstaclesArray =[]
 
 }
 
@@ -652,12 +800,17 @@ function levelTwo() {
     startNextLevel = levelThree
     coins = coinsLevelTwo
     levelDisplay = "Level 2"
+    levelTwoObstacles1()
+    levelTwoObstacles2()
+    levelTwoObstacles3()
+    levelTwoObstacles4()
+    levelTwoObstacles5()
+    laserAudio.play()
     player.x = 10
     player.y = 80
     
 
 }
-
 function levelThree() {
     clearCanvas()
     platforms = platformsLevelThree
@@ -665,8 +818,10 @@ function levelThree() {
     startNextLevel = endGame
     coins = coinsLevelThree
     levelDisplay = "Level 3"
-    player.x = 300
-    player.y = 200
+    laserAudio.pause()
+    player.x = 580
+    player.y = 110
+    obstaclesArray = []
 }
 
 function endGame(){
@@ -690,6 +845,7 @@ function endGame(){
     context.fillText("Press Enter to try again", canvas.width/2, 250)
     completed= true
     
+    obstaclesArray = []
     
 }
 
