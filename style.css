@@ -25,5 +25,5 @@ body {
 }
 
 .levelOne {
-  background-image: url("bgtest.png");
+  background-image: url("./bgtest.png");
 }

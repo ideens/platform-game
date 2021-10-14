@@ -26,26 +26,32 @@ function drawRocks() {
 
 function jumpSound() {
     jumpAudio.src = "jump.wav"
+    jumpAudio.volume = 0.2
     jumpAudio.play()
 }
 
 function collectSound(){
     collectAudio.src = "collecting-coins.wav"
+    collectAudio.volume = 0.2
     collectAudio.play()
 }
 
 function transitionSound(){
     levelTransitionAudio.src = "batman-intro.mp3"
+    levelTransitionAudio.volume = 0.08
     levelTransitionAudio.play()
+
 }
 
 function deathSound(){
     deathAudio.src = "you-died.mp3"
+    deathAudio.volume = 0.08
     deathAudio.play()
 }
 
 function swooshSound() {
-    swooshAudio.src = 'cape-swoosh.wav'
+    swooshAudio.src = 'cape-swoosh-trimmed.wav'
+    swooshAudio.volume = 0.5
     swooshAudio.play()
 }
 
@@ -311,17 +317,7 @@ platformsLevelThree.push({
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 
-const groundDeath = {
-    x: 0,
-    y: canvas.height-20,
-    width: canvas.width,
-    height: 70,
-    color: "#303030",
-    draw: function() {
-        context.fillStyle = this.color
-        context.fillRect(this.x,this.y,this.width, this.height)
-    }
-}
+
 
 
 // START KEYS
@@ -376,6 +372,18 @@ function startGame(){
     // }, 1000/60)
 }
 
+const groundDeath = {
+    x: 0,
+    y: canvas.height-20,
+    width: canvas.width,
+    height: 70,
+    color: "#303030",
+    draw: function() {
+        context.fillStyle = this.color
+        context.fillRect(this.x,this.y,this.width, this.height)
+    }
+}
+
 let coinsLevelOne = []
 let coinsLevelTwo = []
 let coinsLevelThree = []
@@ -400,6 +408,13 @@ function drawScore() {
     context.fillText(`SCORE: ${score}`, canvas.width/2, 25)
 }
 
+
+function drawLevel() {
+    context.font = "20px VT323"
+    context.fillStyle = "#000000"
+    context.textAlign = "center"
+    context.fillText(levelDisplay, 40, 25)
+}
 
 function detectCoins(){
     coins.forEach((coin, index) => {
@@ -463,7 +478,6 @@ coinsLevelOne.push({
     y:65,
 })
 
-//COINS IN LEVEL TWO
 
 
 function playerDied() {
@@ -551,6 +565,7 @@ function playerMovement(){
         player.position = "left"
         if(player.velX > -player.speed){ //speed of player left
             player.velX--
+            swooshSound()
         }
     }
     player.x += player.velX
@@ -594,7 +609,7 @@ function playerMovement(){
     }
 }
 
-
+let levelDisplay = null
 let completed = false
 let startNextLevel = levelOne
 
@@ -609,6 +624,7 @@ function gameLoop(timeStamp) {
     drawPlatforms()
     detectCoins()
     drawScore()
+    drawLevel()
     groundDeath.draw()
     drawRocks()
     player.position = "idle"
@@ -623,6 +639,7 @@ function levelOne(){
     door = doorLevelOne
     startNextLevel = levelTwo
     coins = coinsLevelOne
+    levelDisplay = "Level 1"
     player.x = canvas.width - 50
     player.y = canvas.height - 129
 
@@ -634,6 +651,7 @@ function levelTwo() {
     door = doorLevelTwo
     startNextLevel = levelThree
     coins = coinsLevelTwo
+    levelDisplay = "Level 2"
     player.x = 10
     player.y = 80
     
@@ -646,6 +664,7 @@ function levelThree() {
     door = doorLevelThree
     startNextLevel = endGame
     coins = coinsLevelThree
+    levelDisplay = "Level 3"
     player.x = 300
     player.y = 200
 }
