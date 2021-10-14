@@ -36,4 +36,6 @@ Alongside this, I chose to design my game with pixel art, reminiscent of '80s ga
 
 ## Process
 
-The first step was to implement the player's movement through key presses. For this, I just used a simple rectangle shape to start, and then later moved onto using a sprite sheet.
+### Movement and Collision Detection
+
+The first step was to implement the player's movement through key presses. To start, I just used a simple rectangle for the player and later moved onto using a sprite sheet. I implemented movement in the right, left, and upwards direction using event listeners on the arrow keys and space bar. I then created several canvas rectangles to act as platforms in order to calculate and test the detection of collisions between them and the player.
