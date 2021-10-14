@@ -20,9 +20,27 @@ playerImage.src = "batman-main.png"
 let rockImage = new Image()
 rockImage.src = "rocks-long.png"
 
+let gunImage1 = new Image()
+gunImage1.src = "gun.png"
+let gunImage2 = new Image()
+gunImage2.src = "gun.png"
+let gunImage3 = new Image()
+gunImage3.src = "gun.png"
+let gunImage4 = new Image()
+gunImage4.src = "gun.png"
+let gunImage5 = new Image()
+gunImage5.src = "gun.png"
 
 function drawRocks() {
     context.drawImage(rockImage, 0, 0, 2667, 834, 0, canvas.height-145, canvas.width, 150)
+}
+
+function drawGuns() {
+    context.drawImage(gunImage1, 0,0,209,209, 82,0,36,30)
+    context.drawImage(gunImage2, 0,0,209,209, 182,0,36,30)
+    context.drawImage(gunImage3, 0,0,209,209, 282,0,36,30)
+    context.drawImage(gunImage4, 0,0,209,209, 382,0,36,30)
+    context.drawImage(gunImage5, 0,0,209,209, 482,0,36,30)
 }
 
 function jumpSound() {
@@ -51,7 +69,7 @@ function deathSound(){
 }
 
 function swooshSound() {
-    swooshAudio.src = 'cape-swoosh-trimmed.wav'
+    swooshAudio.src = "cape-swoosh-trimmed.wav"
     swooshAudio.volume = 0.5
     swooshAudio.play()
 }
@@ -612,7 +630,7 @@ class Obstacle {
         
     }
     draw() {
-        context.fillStyle = "#ff6229"
+        context.fillStyle = "#c43241"
         context.fillRect(this.x, this.y, this.width, this.height)
     }
     update() {
@@ -824,12 +842,13 @@ function gameLoop(timeStamp) {
     door.draw()
     drawPlatforms()
     detectCoins()
-    drawScore()
     drawLevel()
     detectLaser()
     handleObstacles()
     groundDeath.draw()
     drawRocks()
+    drawGuns()
+    drawScore()
     player.position = "idle"
     playerMovement()
 
