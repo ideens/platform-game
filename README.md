@@ -33,3 +33,7 @@ Alongside this, I chose to design my game with pixel art, reminiscent of '80s ga
 - Git, GitHub
 - Firefox Developer Edition
 - Adobe Illustrator, Photoshop
+
+## Process
+
+The first step was to implement the player's movement through key presses. For this, I just used a simple rectangle shape to start, and then later moved onto using a sprite sheet.
