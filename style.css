@@ -16,14 +16,17 @@ body {
 }
 
 #game {
+  width: 80vw;
   background-color: white;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -320px;
-  margin-top: -180px;
+  /* top: 50%;
+  left: 50%; */
+  margin-left: 10vw;
+  margin-top: 10vh;
 }
 
 .levelOne {
   background-image: url("./bgtest.png");
+  background-repeat: no-repeat;
+  background-size: 110vw;
 }

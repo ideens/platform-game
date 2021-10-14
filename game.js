@@ -588,7 +588,7 @@ coinsLevelThree.push({
 })
 coinsLevelThree.push({
     x:180,
-    y:190,
+    y:195,
     isAbsorbed: false
 })
 coinsLevelThree.push({
