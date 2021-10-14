@@ -349,7 +349,7 @@ document.addEventListener ("keyup", function(e){
 // Start page title
 function introScreen(){
     context.fillStyle = "#e6c653"
-    context.fillRect(canvas.width/2 -300, canvas.height/2 -105, 600, 220)
+    context.fillRect(0, 0, canvas.width, canvas.height)
     context.font = "100px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
@@ -693,7 +693,7 @@ function playerDied() {
     context.font = "30px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText(`YOUR SCORE WAS: ${score}`, canvas.width/2, 200)
+    context.fillText(`YOUR SCORE WAS: ${score}/300`, canvas.width/2, 200)
 
     context.font = "20px VT323"
     context.fillStyle = "#303030"
@@ -812,7 +812,7 @@ function playerMovement(){
 
 let levelDisplay = null
 let completed = false
-let startNextLevel = levelThree
+let startNextLevel = levelOne
 
 // Main game loop
 function gameLoop(timeStamp) {
@@ -844,6 +844,7 @@ function levelOne(){
     coins = coinsLevelOne
     coinsReset()
     levelDisplay = "Level 1"
+    laserAudio.pause()
     player.x = canvas.width - 50
     player.y = canvas.height - 129
     obstaclesArray =[]
@@ -896,14 +897,14 @@ function endGame(){
     context.font = "30px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText(`YOUR SCORE WAS: ${score}`, canvas.width/2, 200)
+    context.fillText(`YOUR SCORE WAS: ${score}/300`, canvas.width/2, 200)
 
     context.font = "20px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter to try again", canvas.width/2, 250)
+    context.fillText("Press Enter to play again", canvas.width/2, 250)
     completed= true
-    
+    laserAudio.pause()
     obstaclesArray = []
     
 }
