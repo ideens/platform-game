@@ -112,6 +112,31 @@ const player = {
     }
 }
 
+// let villainImage = new Image()
+// villainImage.src = "clayface-spritesheet.png"
+
+// class Villain {
+//     constructor(x,y,width,height,speed) {
+//         this.x = x
+//         this.y = y
+//         this.width = width
+//         this.height = height
+//         this.speed = speed
+        
+//     }
+//     draw() {
+//         context.fillStyle = "#c43241"
+//         context.fillRect(this.x, this.y, this.width, this.height)
+//     }
+//     update() {
+//         this.x +=this.speed
+//         if(this.x > 450){
+//             speed = -speed
+//         }
+//     }
+// }
+
+
 
     const doorLevelOne = {
         x: canvas.width - 40,
