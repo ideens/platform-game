@@ -1,3 +1,9 @@
+const jumpAudio = document.getElementById('jump')
+const collectAudio = document.getElementById('collect')
+const levelTransitionAudio = document.getElementById('level')
+const deathAudio = document.getElementById('death')
+const swooshAudio = document.getElementById('swoosh')
+
 const canvas = document.getElementById('game')
 const context =canvas.getContext('2d')
 
@@ -13,9 +19,34 @@ playerImage.src = "batman-main.png"
 let rockImage = new Image()
 rockImage.src = "rocks-long.png"
 
-function drawRocks() {
-    context.drawImage(rockImage, 0, 0, 2667, 834, 0, canvas.height-140, canvas.width, 150)
 
+function drawRocks() {
+    context.drawImage(rockImage, 0, 0, 2667, 834, 0, canvas.height-145, canvas.width, 150)
+}
+
+function jumpSound() {
+    jumpAudio.src = "jump.wav"
+    jumpAudio.play()
+}
+
+function collectSound(){
+    collectAudio.src = "collecting-coins.wav"
+    collectAudio.play()
+}
+
+function transitionSound(){
+    levelTransitionAudio.src = "batman-intro.mp3"
+    levelTransitionAudio.play()
+}
+
+function deathSound(){
+    deathAudio.src = "you-died.mp3"
+    deathAudio.play()
+}
+
+function swooshSound() {
+    swooshAudio.src = 'cape-swoosh.wav'
+    swooshAudio.play()
 }
 
 const moveArrayRight = [137,273,409,545,681,817,963,1089,1225,1361,1497,1633,1769]
@@ -312,8 +343,11 @@ document.addEventListener ("keyup", function(e){
 })
 
 
+
 // Start page title
 function introScreen(){
+    context.fillStyle = "#e6c653"
+    context.fillRect(canvas.width/2 -300, canvas.height/2 -105, 600, 220)
     context.font = "100px VT323"
     context.fillStyle = "#303030"
     context.textAlign = "center"
@@ -378,7 +412,7 @@ function detectCoins(){
             console.log('REMOVE FROM SCREEN')
             score += 10
             coin.isAbsorbed = true
-            
+            collectSound()
         }
     })
 
@@ -436,7 +470,7 @@ function playerDied() {
     //clearCanvas()
     died = true
     
-    context.fillStyle = "#FFFFFF"
+    context.fillStyle = "#e6c653"
     context.fillRect(canvas.width/2 -200, canvas.height/2 -100, 400, 200)
 
     context.font = "60px VT323"
@@ -464,6 +498,7 @@ function gameReset(){
     player.velX = 0
     player.velY = 0
     died = false
+    completed = false
     score = 0
     startNextLevel = levelOne
     startNextLevel()
@@ -500,12 +535,14 @@ function playerMovement(){
             player.velY = -player.jumpStrength*1.5
             player.jumping = true
         }
+        jumpSound()
     }
     if(keys["ArrowRight"]) {
         //console.log("Right Key Pressed")
         player.position = "right"
         if(player.velX < player.speed){ //speed of player right
             player.velX++
+            swooshSound()
         }
         
     }
@@ -542,10 +579,12 @@ function playerMovement(){
     }
     //COLLIDING WITH THE DOOR
     if (collisionDetection(player, door) ){
+        transitionSound()
         startNextLevel()
     } 
     //COLLIDING WITH THE GROUND
     if (collisionDetection(player, groundDeath)){
+        deathSound()
         playerDied()
         console.log("DEAD")
     }
@@ -562,7 +601,7 @@ let startNextLevel = levelOne
 // Main game loop
 function gameLoop(timeStamp) {
     clearCanvas()
-    const frame = Math.floor(timeStamp/100) % 13
+    const frame = Math.floor(timeStamp/80) % 13
     canvas.classList.add('levelOne')
     drawCoins()
     player.draw(frame)
@@ -613,14 +652,23 @@ function levelThree() {
 
 function endGame(){
     clearCanvas()
+    context.fillStyle = "#e6c653"
+    context.fillRect(canvas.width/2 -200, canvas.height/2 -100, 400, 200)
+
     context.font = "60px VT323"
-    context.fillStyle = "#000000"
+    context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("YOU WON!", canvas.width/2, 190)
+    context.fillText("YOU WON!", canvas.width/2, 150)
+
+    context.font = "30px VT323"
+    context.fillStyle = "#303030"
+    context.textAlign = "center"
+    context.fillText(`YOUR SCORE WAS: ${score}`, canvas.width/2, 200)
+
     context.font = "20px VT323"
-    context.fillStyle = "#000000"
+    context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter to play again", canvas.width/2, 250)
+    context.fillText("Press Enter to try again", canvas.width/2, 250)
     completed= true
     
     
