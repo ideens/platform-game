@@ -19,14 +19,23 @@ body {
   width: 80vw;
   background-color: white;
   position: absolute;
-  /* top: 50%;
-  left: 50%; */
   margin-left: 10vw;
-  margin-top: 10vh;
+  margin-top: 8vh;
+}
+
+h3 {
+  color: #3f705c;
+  font-family: "VT323", monospace;
+  text-align: center;
+  font-size: 16px;
 }
 
 .levelOne {
   background-image: url("./bgtest.png");
   background-repeat: no-repeat;
   background-size: 110vw;
+}
+
+.remove {
+  display: none;
 }

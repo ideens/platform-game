@@ -1,3 +1,4 @@
+const instructions = document.querySelector('h3')
 const jumpAudio = document.getElementById('jump')
 const collectAudio = document.getElementById('collect')
 const levelTransitionAudio = document.getElementById('level')
@@ -391,27 +392,17 @@ document.addEventListener ("keyup", function(e){
 
 // Start page title
 function introScreen(){
-
+    instructions.classList.add('remove')
     context.fillStyle = "#e6c653"
     context.fillRect(0, 0, canvas.width, canvas.height)
     context.font = "100px VT323, Trebuchet MS"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2-20)
+    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2)
     context.font = "25px VT323,Trebuchet MS"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 30)
-    context.fillStyle = "#4a9171"
-    context.fillRect(170, 250, canvas.width-340, 70)
-    context.font = "16px VT323, Trebuchet MS"
-    context.fillStyle = "#dbe0c5"
-    context.textAlign = "center"
-    context.fillText("Use the arrow keys to move and jump.", canvas.width/2, canvas.height/2 + 100)
-    context.font = "16px VT323, Trebuchet MS"
-    context.fillStyle = "#dbe0c5"
-    context.textAlign = "center"
-    context.fillText("Reach the final door to win!", canvas.width/2, canvas.height/2 + 120)
+    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 70)
 }
 
 // Function to clear the canvas
@@ -425,6 +416,7 @@ function startGame(){
     clearCanvas()
     startNextLevel()
     requestAnimationFrame(gameLoop)
+    instructions.classList.remove('remove')
 
     // const interval = setInterval(function(){
     //     clearCanvas()
