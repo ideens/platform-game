@@ -393,14 +393,24 @@ document.addEventListener ("keyup", function(e){
 function introScreen(){
     context.fillStyle = "#e6c653"
     context.fillRect(0, 0, canvas.width, canvas.height)
-    context.font = "100px VT323"
+    context.font = "100px VT323, Arial"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2)
-    context.font = "25px VT323"
+    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2-20)
+    context.font = "25px VT323,Arial"
     context.fillStyle = "#303030"
     context.textAlign = "center"
-    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 80)
+    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 30)
+    context.fillStyle = "#2d634f"
+    context.fillRect(150, 250, canvas.width-300, 70)
+    context.font = "18px VT323, Arial"
+    context.fillStyle = "#dbe0c5"
+    context.textAlign = "center"
+    context.fillText("Use the arrow keys to move and jump.", canvas.width/2, canvas.height/2 + 100)
+    context.font = "18px VT323, Arial"
+    context.fillStyle = "#dbe0c5"
+    context.textAlign = "center"
+    context.fillText("Reach the final door to win!", canvas.width/2, canvas.height/2 + 120)
 }
 
 // Function to clear the canvas
