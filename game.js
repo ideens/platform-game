@@ -6,6 +6,8 @@ const deathAudio = document.getElementById('death')
 const swooshAudio = document.getElementById('swoosh')
 const laserAudio = document.getElementById('laser')
 
+let fontFaceSet = document.fonts
+
 const canvas = document.getElementById('game')
 const context =canvas.getContext('2d')
 
@@ -392,17 +394,20 @@ document.addEventListener ("keyup", function(e){
 
 // Start page title
 function introScreen(){
-    instructions.classList.add('remove')
-    context.fillStyle = "#e6c653"
-    context.fillRect(0, 0, canvas.width, canvas.height)
-    context.font = "100px VT323, Trebuchet MS"
-    context.fillStyle = "#303030"
-    context.textAlign = "center"
-    context.fillText("THE BATGAME", canvas.width/2, canvas.height/2)
-    context.font = "25px VT323,Trebuchet MS"
-    context.fillStyle = "#303030"
-    context.textAlign = "center"
-    context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 70)
+    document.fonts.ready.then(function() {
+
+        instructions.classList.add('remove')
+        context.fillStyle = "#e6c653"
+        context.fillRect(0, 0, canvas.width, canvas.height)
+        context.font = "100px VT323, Trebuchet MS"
+        context.fillStyle = "#303030"
+        context.textAlign = "center"
+        context.fillText("THE BATGAME", canvas.width/2, canvas.height/2)
+        context.font = "25px VT323,Trebuchet MS"
+        context.fillStyle = "#303030"
+        context.textAlign = "center"
+        context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 70)
+    })
 }
 
 // Function to clear the canvas
