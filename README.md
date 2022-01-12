@@ -8,6 +8,7 @@ Platform games are a subgenre of action games that involve the player navigating
 
 Given that Canvas had not been taught in the first three weeks of the course, this project required a great deal of research and extracurricular learning.
 
+Timeframe: 1 week
 
 ![game clip](batgame-gif.gif)
 
