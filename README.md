@@ -214,6 +214,11 @@ function playerMovement(){
     }
 ```
 
+## Wins
+- Planning: This was a huge win for me as I was able to plan out the core structure of the game prior to coding which made the process run a lot more smoothly.
+- Styling: I was very happy with the look and feel of the game. I was able to deliver the retro pixel-art game that I had imagined during the proess.
+- Using Canvas: Both learning and implementing a new technology in the span of a week was both a challenge and a win and I feel that I managed my time well enough to pull it off.
+
 ## Challenges
 Creating the sprite animation was a bit of a challenge. To start, I created a spritesheet with only left and right facing poses and implemented them on key presses. However, this would not work with a complete sprite sheet as I would need to loop through the entire thing while the key is pressed. I found this difficult to wrap my head around but I soon figured out that the movement would not relate to key presses, but to the animation frame. 
 
