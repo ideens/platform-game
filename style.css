@@ -17,7 +17,6 @@ body {
 
 #game {
 	width: 80vw;
-	/* background-color: white; */
 	position: absolute;
 	margin-left: 10vw;
 	margin-top: 8vh;
@@ -31,6 +30,7 @@ h3 {
 }
 
 .levelOne {
+	background-color: #366a58;
 	background-image: url("./bgtest.png");
 	background-repeat: no-repeat;
 	background-size: 140%;
