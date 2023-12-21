@@ -1,41 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html,
 body {
-  width: 100%;
+	width: 100%;
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
-  background: #222;
+	margin: 0px;
+	padding: 0px;
+	background: #222;
 }
 
 #game {
-  width: 80vw;
-  background-color: white;
-  position: absolute;
-  margin-left: 10vw;
-  margin-top: 8vh;
+	width: 80vw;
+	background-color: white;
+	position: absolute;
+	margin-left: 10vw;
+	margin-top: 8vh;
 }
 
 h3 {
-  color: #3f705c;
-  font-family: "VT323", monospace;
-  text-align: center;
-  font-size: 17px;
+	color: #3f705c;
+	font-family: "VT323", monospace;
+	text-align: center;
+	font-size: 17px;
 }
 
 .levelOne {
-  background-image: url("./bgtest.png");
-  background-repeat: no-repeat;
-  background-size: 110vw;
+	background-image: url("./bgtest.png");
+	background-repeat: no-repeat;
+	background-size: 120%;
 }
 
 .remove {
-  display: none;
+	display: none;
 }
